@@ -1,24 +1,25 @@
 import requests
 import allure
-from enndpoints.endpoint_handler import EndpointHandler
+from endpoints.endpoint_handler import EndpointHandler
 
 
 class GetMeme(EndpointHandler):
-
-    @allure.step('Get list of all memes')
-    def get_all_memes(self):
+    @allure.step('Get a list of all memes')
+    def get_all_memes(self, headers=None):
         self.response = requests.get(
-            f'{self.url}/meme',
-            headers=self.get_headers()
+            url=f'{self.url}/meme',
+            headers=headers
         )
-        self.response_json = self.response.json()
+        self.json = self.response.json()
         return self.response
 
-    @allure.step('Get single meme by id')
-    def get_meme(self, meme_id):
+    @allure.step('Get a meme by ID')
+    def get_one_meme(self, meme_id, headers=None):
+        headers = headers if headers else self.headers
         self.response = requests.get(
-            f'{self.url}/meme/{meme_id}',
-            headers=self.get_headers()
+            url=f'{self.url}/meme/{meme_id}',
+            headers=headers
         )
-        self.response_json = self.response.json()
+        self.json = self.response.json()
+        self.meme_id = self.json['id']
         return self.response
