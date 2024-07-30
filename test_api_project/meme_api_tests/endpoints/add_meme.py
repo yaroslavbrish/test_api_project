@@ -1,22 +1,15 @@
 import requests
 import allure
-from enndpoints.endpoint_handler import EndpointHandler
+from endpoints.endpoint_handler import EndpointHandler
 
 
 class AddMeme(EndpointHandler):
-
-    @allure.step('Add new meme')
-    def add_meme(self, text, url, tags, info):
-        payload = {
-            'text': text,
-            'url': url,
-            'tags': tags,
-            'info': info
-        }
+    @allure.step('Create a new meme')
+    def create_meme(self, body, headers=None):
+        headers = headers if headers else self.headers
         self.response = requests.post(
-            f'{self.url}/meme',
-            json=payload,
-            headers=self.get_headers()
+            url=f'{self.url}/meme',
+            json=body,
+            headers=headers
         )
-        self.response_json = self.response.json()
         return self.response

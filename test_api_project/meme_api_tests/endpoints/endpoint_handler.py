@@ -3,24 +3,26 @@ import allure
 
 class EndpointHandler:
     url = 'http://167.172.172.115:52355'
+    headers = {'Content-Type': 'application/json', 'Authorization': None}
+    token = None
     response = None
-    response_json = None
-    headers = {'Content-type': 'application/json'}
+    json = None
+    meme_id = None
 
-    def get_headers(self):
-        return self.headers
-
-    @allure.step('Verify status code is 200')
+    @allure.step('Check response code is 200')
     def check_status_code_is_200(self):
-        assert self.response.status_code == 200, f"Status code is not 200, got {self.response.status_code}"
+        assert self.response.status_code == 200, (
+            f"Expected status code 200, got {self.response.status_code}"
+        )
 
-    @allure.step('Verify response contains expected text')
-    def check_response_contains(self, text):
-        assert text in self.response_json.get('text', ''), f"Response does not contain expected text: {text}"
+    @allure.step('Check that id is equal to expected')
+    def check_response_id_is_correct(self, meme_id):
+        assert self.json['id'] == meme_id, (
+            f"Expected id to be {meme_id}, got {self.json['id']}"
+        )
 
-    def parse_response(self):
-        try:
-            self.response_json = self.response.json()
-        except ValueError:
-            self.response_json = None
-            assert False, f"Failed to decode JSON response: {self.response.text}"
+    @allure.step('Check response code is 400')
+    def check_status_code_is_400(self):
+        assert self.response.status_code == 400, (
+            f"Expected status code 400, got {self.response.status_code}"
+        )
