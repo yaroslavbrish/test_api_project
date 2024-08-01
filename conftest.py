@@ -41,7 +41,9 @@ def authorization_token(get_authorize):
 
 
 @pytest.fixture
-def new_meme_id(create_meme_endpoint, authorization_token):
+def new_meme_id(create_meme_endpoint,
+                authorization_token,
+                delete_meme_endpoint):
     payload = {
         "text": "Test Mem",
         "url": "http://example.com/test.jpg",
@@ -53,9 +55,16 @@ def new_meme_id(create_meme_endpoint, authorization_token):
             "omg": 4
         }
     }
+    # Creating a new meme
     create_meme_endpoint.create_meme(
         body=payload,
         headers={'Authorization': f'{authorization_token}'}
     )
     meme_id = create_meme_endpoint.response.json()["id"]
+    # Returning meme ID for using it in tests
     yield meme_id
+    # Deleting meme after test execution is finished
+    delete_meme_endpoint.delete_meme(
+        meme_id,
+        headers={'Authorization': f'{authorization_token}'}
+    )

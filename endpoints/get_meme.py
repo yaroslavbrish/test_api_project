@@ -15,7 +15,6 @@ class GetMeme(EndpointHandler):
 
     @allure.step('Get a meme by ID')
     def get_one_meme(self, meme_id, headers=None):
-        headers = headers if headers else self.headers
         self.response = requests.get(
             url=f'{self.url}/meme/{meme_id}',
             headers=headers

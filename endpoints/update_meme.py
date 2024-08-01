@@ -12,6 +12,8 @@ class UpdateMeme(EndpointHandler):
             json=body,
             headers=headers,
         )
-        self.json = self.response.json()
-        self.meme_id = self.json['id']
+        if self.response.status_code == 200:
+            self.json = self.response.json()
+        else:
+            self.json = None
         return self.response
