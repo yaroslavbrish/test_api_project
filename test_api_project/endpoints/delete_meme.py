@@ -23,3 +23,14 @@ class DeleteMeme(EndpointHandler):
         assert self.response.status_code == 404, (
             f"Expected 404, got {self.response.status_code}"
         )
+
+    @allure.step(
+        'Verify that user cannot delete meme created by another user'
+    )
+    def delete_meme_created_by_other_user(self, meme_id, headers=None):
+        headers = headers if headers else self.headers
+        self.response = requests.delete(
+            f"{self.url}/meme/{meme_id}",
+            headers=headers
+        )
+        return self.response

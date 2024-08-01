@@ -26,3 +26,9 @@ class EndpointHandler:
         assert self.response.status_code == 400, (
             f"Expected status code 400, got {self.response.status_code}"
         )
+
+    @allure.step('Check response code is 403')
+    def check_status_code_is_403(self):
+        assert self.response.status_code == 403, (
+            f"Expected status code 403, got {self.response.status_code}"
+        )

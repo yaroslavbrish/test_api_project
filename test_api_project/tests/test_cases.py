@@ -96,3 +96,15 @@ def test_delete_meme(delete_meme_endpoint,
         new_meme_id,
         headers={'Authorization': f'{authorization_token}'}
     )
+
+
+# DELETE a meme created by another user
+def test_delete_meme_created_by_another_user(delete_meme_endpoint,
+                                             authorization_token,
+                                             get_meme_endpoint,
+                                             meme_id=1):
+    delete_meme_endpoint.delete_meme_created_by_other_user(
+        meme_id=meme_id,
+        headers={'Authorization': f'{authorization_token}'}
+    )
+    delete_meme_endpoint.check_status_code_is_403()
