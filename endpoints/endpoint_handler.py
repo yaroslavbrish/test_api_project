@@ -39,6 +39,12 @@ class EndpointHandler:
             f"Expected status code 404, got {self.response.status_code}"
         )
 
+    @allure.step('Check response code is 500')
+    def check_status_code_is_500(self):
+        assert self.response.status_code == 500, (
+            f"Expected status code 500, got {self.response.status_code}"
+        )
+
     @allure.step('Check that id is equal to expected')
     def check_response_id_is_correct(self, meme_id):
         assert self.json['id'] == meme_id, (

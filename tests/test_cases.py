@@ -139,6 +139,17 @@ def test_create_meme_with_invalid_token(create_meme_endpoint,
     create_meme_endpoint.check_status_code_is_401()
 
 
+# Create a meme without a token
+@pytest.mark.parametrize('body', valid_data)
+def test_create_meme_without_a_token(create_meme_endpoint,
+                                     body):
+    create_meme_endpoint.create_meme(
+        body=body,
+        headers={'Authorization': ''}
+    )
+    create_meme_endpoint.check_status_code_is_500()
+
+
 # Update a meme with invalid token
 def test_put_a_post_with_invalid_token(update_meme_endpoint, new_meme_id):
     body = {
