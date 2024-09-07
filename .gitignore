@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# IDE-specific
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and test outputs
+*.log
+test_output/
+*.xml
+*.html
+*.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+lib/
+lib64/
+site-packages/
+
+# Environment variables and sensitive information
+*.env
+*.key
+*.pem
